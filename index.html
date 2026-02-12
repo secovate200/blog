@@ -3,12 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <title>secovate200's blog</title>
   </head>
   <body>
-    <header class="header">1</header>
-    <aside class="sidebar">2</aside>
-    <main class="main dashboard-main"></main>
+    <header class="nav">
+      <span class="material-symbols-rounded navOpenBtn"> menu </span>
+      <a href="#" class="logo">Secovate200</a>
+      <ul class="nav-links">
+        <i class="material-symbols-rounded navCloseBtn" id="navCloseBtn"
+          >close</i
+        >
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Category</a></li>
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Logout</a></li>
+        <li><a href="#">Dashboard</a></li>
+      </ul>
+      <div class="btn-area">
+        <button class="material-symbols-rounded search-icon" id="searchIcon">
+          search
+        </button>
+        <button class="material-symbols-rounded theme-toggle" id="theme-toggle">
+          dark_mode
+        </button>
+      </div>
+      <div class="search-box">
+        <span class="material-symbols-rounded search-icon"> search </span>
+        <input type="text" placeholder="Search here..." />
+      </div>
+    </header>
+    <main class="wrapper">
+      <section class="blog-wrapper"></section>
+      <aside class="about"></aside>
+    </main>
+    <script src="./script.js"></script>
   </body>
 </html>

@@ -1,29 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+:root {
+  --background-color: #f4f9f7;
+  --second-background-color: #ffffff;
+  --third-background-color: #e0eee9;
+  --main-text: #1a2b26;
+  --sub-text: #5f7d75;
+  --main-color: #00a376;
+}
 * {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 800;
+  font-style: normal;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+html {
+  overscroll-behavior: none;
+}
 body {
+  background: var(--background-color);
+}
+body.darkmode {
+  --background-color: #0f111a;
+  --second-background-color: #1a1d29;
+  --third-background-color: #262b3d;
+  --main-text: #e6fff7;
+  --sub-text: #8fa7a0;
+  --main-color: #33ffb8;
+}
+.nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 200px;
+  display: flex;
+  background: var(--second-background-color);
+}
+.nav,
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+.nav {
+  justify-content: space-between;
+}
+a {
+  color: var(--main-text);
+  text-decoration: none;
+}
+.nav .logo {
+  font-size: 22px;
+  font-weight: 800;
+}
+.nav .nav-links {
+  column-gap: 20px;
+  list-style: none;
+}
+.nav .nav-links a {
+  transition: all 0.2s linear;
+}
+.nav.openSearch .nav-links a {
+  opacity: 0;
+  pointer-events: none;
+}
+.nav .header-right {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 10px;
+}
+.nav .search-icon,
+.nav .theme-toggle {
+  color: var(--main-color);
+  cursor: pointer;
+  font-size: 20px;
+}
+.btn-area {
+  display: flex;
+  gap: 10px;
+}
+.nav .search-box {
+  position: absolute;
+  right: 280px;
+  height: 45px;
+  max-width: 555px;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s linear;
+}
+.nav button {
+  background: var(--second-background-color);
+  border: none;
+  outline: none;
+}
+.nav.openSearch .search-box {
+  opacity: 1;
+  pointer-events: auto;
+}
+.search-box input {
   height: 100%;
   width: 100%;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: 60px 1fr;
-  grid-template-areas:
-    "sidebar header"
-    "sidebar main";
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 0 15px 0 45px;
+  color: var(--main-text);
+  background-color: var(--third-background-color);
 }
-.header {
-  grid-area: header;
-  background-color: #fff;
+.search-box .search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
 }
-.sidebar {
-  grid-area: sidebar;
-  background-color: #1c1f23;
-  height: 100vh;
+.nav .navOpenBtn,
+.nav .navCloseBtn {
+  display: none;
 }
-.main {
-  grid-area: main;
-  background-color: #c3c5ca;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 200px;
+  gap: 40px;
+}
+
+.blog-wrapper {
+  flex: 1; /* 블로그 영역이 남은 공간을 다 차지 */
+  min-width: 0;
+}
+
+.about {
+  width: 300px; /* 사이드바 고정 너비 */
+  flex-shrink: 0;
+  background: var(--second-background-color);
+  border-radius: 8px;
   padding: 20px;
+  height: fit-content;
+}
+/*responsive*/
+
+@media screen and (max-width: 1024px) {
+  .nav {
+    padding: 20px 100px;
+  }
+  .wrapper {
+    padding: 10px 100px;
+  }
+  .nav .search-box {
+    right: 150px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .nav {
+    padding: 20px 50px;
+  }
+  .wrapper {
+    padding: 10px 50px;
+  }
+  .nav .search-box {
+    right: 110px;
+    max-width: 400px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav .navOpenBtn,
+  .nav .navCloseBtn {
+    display: block;
+  }
+  .nav .nav-links {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    max-width: 280px;
+    width: 100%;
+    padding-top: 100px;
+    row-gap: 30px;
+    flex-direction: column;
+    background: var(--third-background-color);
+    transition: all 0.4s ease;
+  }
+  .nav.openNav .nav-links {
+    left: 0;
+  }
+  .nav .navOpenBtn {
+    color: var(--main-color);
+
+    cursor: pointer;
+  }
+  .nav .navCloseBtn {
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--main-color);
+  }
+  .nav .search-box {
+    top: calc(100% + 10px);
+    max-width: calc((100% - 80px));
+    right: 50%;
+    transform: translateX(50%);
+  }
 }
