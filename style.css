@@ -29,12 +29,19 @@ body.darkmode {
   --sub-text: #8fa7a0;
   --main-color: #33ffb8;
 }
-.nav {
+header {
   position: sticky;
   top: 0;
   left: 0;
+  background: var(--second-background-color);
+  z-index: 100;
+}
+.nav {
+  margin: auto auto;
+  max-width: 1200px;
+
   width: 100%;
-  padding: 20px 200px;
+  padding: 20px 0px;
   display: flex;
   background: var(--second-background-color);
 }
@@ -82,7 +89,7 @@ a {
 }
 .nav .search-box {
   position: absolute;
-  right: 280px;
+  right: 300px;
   height: 45px;
   max-width: 555px;
   width: 100%;
@@ -120,37 +127,230 @@ a {
 .nav .navCloseBtn {
   display: none;
 }
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 200px;
-  gap: 40px;
-}
-
 .blog-wrapper {
-  flex: 1; /* 블로그 영역이 남은 공간을 다 차지 */
-  min-width: 0;
+  width: 100%;
+  max-width: 1200px;
+
+  height: 100%;
+  display: flex;
+  padding: 40px 0px;
+  justify-content: space-between;
+  margin: auto auto;
+}
+/* Blog Layout */
+.blog-wrapper {
+  display: flex;
+  gap: 50px; /* 섹션과 사이드바 간격 */
 }
 
-.about {
-  width: 300px; /* 사이드바 고정 너비 */
-  flex-shrink: 0;
-  background: var(--second-background-color);
-  border-radius: 8px;
-  padding: 20px;
-  height: fit-content;
+/* Post List Design */
+.post {
+  flex: 2; /* 본문 비중 확대 */
 }
+/* Post Card List Styling - Minimalist Version (No Image) */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* 게시글 사이 간격을 넓혀 여유를 줌 */
+}
+
+.post-card {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--third-background-color);
+}
+
+.post-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.category-tag {
+  color: var(--main-color);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.post-date {
+  font-size: 0.8rem;
+  color: var(--sub-text);
+  letter-spacing: 0.5px;
+}
+
+.post-title {
+  font-size: 1.8rem; /* 제목 크기를 키워 시각적 계층 강화 */
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+
+.post-title a:hover {
+  text-decoration: underline; /* 텍스트 중심 디자인이므로 밑줄로 강조 */
+  text-underline-offset: 6px;
+}
+
+.post-excerpt {
+  font-size: 1rem;
+  color: var(--sub-text);
+  line-height: 1.8;
+  margin-bottom: 25px;
+  max-width: 90%; /* 너무 길게 늘어지지 않도록 조절 */
+}
+
+/* 태그 스타일링 - 박스 대신 텍스트로만 표현 */
+.post-tags {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.post-tags a {
+  font-size: 0.85rem;
+  color: var(--sub-text);
+  transition: color 0.2s ease;
+}
+
+.post-tags a:hover {
+  color: var(--main-color);
+}
+
+/* Aside (Sidebar) Design */
+.about {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: sticky;
+  top: 100;
+}
+/* About Card - Minimalist Profile */
+.about-card {
+  position: sticky;
+  top: 100px;
+  background: var(--second-background-color);
+  border: 1px solid var(--third-background-color);
+  padding: 30px;
+  width: 100%;
+  margin-bottom: 40px;
+  transition: border-color 0.3s ease;
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.logo-box {
+  width: 50px;
+  height: 50px;
+
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box img {
+  width: 100%;
+  height: 100%;
+}
+
+.identity .name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--main-text);
+  line-height: 1.2;
+}
+
+.identity .role {
+  font-size: 0.75rem;
+  color: var(--main-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* Body */
+.card-body {
+  margin-bottom: 25px;
+}
+
+.bio-text {
+  font-size: 0.85rem;
+  color: var(--sub-text);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+/* Footer (Email Only) */
+.card-footer {
+  border-top: 1px solid var(--third-background-color);
+  padding-top: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-item .material-symbols-rounded {
+  font-size: 18px;
+  color: var(--main-color);
+}
+
+.email-link {
+  font-size: 0.85rem;
+  color: var(--main-text);
+  text-decoration: none;
+
+  transition: opacity 0.2s;
+}
+
+/* Load More */
+.load-more-wrapper {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.load-more-btn {
+  background: transparent;
+  color: var(--main-text);
+  border: 1px solid var(--third-background-color);
+  padding: 12px 60px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.load-more-btn:hover {
+  border-color: var(--main-color);
+  color: var(--main-color);
+}
+
 /*responsive*/
 
 @media screen and (max-width: 1024px) {
   .nav {
     padding: 20px 100px;
   }
-  .wrapper {
-    padding: 10px 100px;
-  }
+
   .nav .search-box {
     right: 150px;
+  }
+  .blog-wrapper {
+    flex-direction: column;
+    padding: 40px 20px;
   }
 }
 
@@ -158,9 +358,7 @@ a {
   .nav {
     padding: 20px 50px;
   }
-  .wrapper {
-    padding: 10px 50px;
-  }
+
   .nav .search-box {
     right: 110px;
     max-width: 400px;
