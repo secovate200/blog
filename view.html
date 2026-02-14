@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>secovate200's blog</title>
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <span class="material-symbols-rounded navOpenBtn"> menu </span>
+        <a href="#" class="logo">Secovate200</a>
+        <ul class="nav-links">
+          <i class="material-symbols-rounded navCloseBtn" id="navCloseBtn"
+            >close</i
+          >
+          <li><a href="#">Home</a></li>
+          <li><a href="./category.html">Category</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Logout</a></li>
+          <li><a href="#">Dashboard</a></li>
+        </ul>
+        <div class="btn-area">
+          <button class="material-symbols-rounded search-icon" id="searchIcon">
+            search
+          </button>
+          <button
+            class="material-symbols-rounded theme-toggle"
+            id="theme-toggle"
+          >
+            dark_mode
+          </button>
+        </div>
+        <div class="search-box">
+          <span class="material-symbols-rounded search-icon"> search </span>
+          <input type="text" placeholder="Search here..." />
+        </div>
+      </nav>
+    </header>
+    <main class="blog-wrapper">
+      <section class="post-content"></section>
+
+      <aside class="about">
+        <div class="about-card">
+          <div class="card-header">
+            <div class="logo-box">
+              <img src="logo.png" alt="Secovate200" />
+            </div>
+            <div class="identity">
+              <h3 class="name">Secovate200</h3>
+              <p class="role">Security Researcher</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="bio-text">
+              집중적인 해킹 연구와 미니멀한 시스템 개발을 지향합니다. 불필요한
+              노이즈를 제거한 순수한 환경을 구축합니다.
+            </p>
+          </div>
+
+          <div class="card-footer">
+            <div class="contact-item">
+              <span class="material-symbols-rounded">mail</span>
+              <a href="mailto:your-email@example.com" class="email-link"
+                >your-email@example.com</a
+              >
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -20,6 +20,7 @@ html {
 }
 body {
   background: var(--background-color);
+  transition: all 0.2s ease;
 }
 body.darkmode {
   --background-color: #0f111a;
@@ -35,6 +36,7 @@ header {
   left: 0;
   background: var(--second-background-color);
   z-index: 100;
+  transition: all 0.2s ease;
 }
 .nav {
   margin: auto auto;
@@ -43,7 +45,8 @@ header {
   width: 100%;
   padding: 20px 0px;
   display: flex;
-  background: var(--second-background-color);
+  background: transparent;
+  transition: all 0.2s ease;
 }
 .nav,
 .nav-links {
@@ -101,6 +104,7 @@ a {
   background: var(--second-background-color);
   border: none;
   outline: none;
+  transition: all 0.2s ease;
 }
 .nav.openSearch .search-box {
   opacity: 1;
@@ -144,7 +148,8 @@ a {
 }
 
 /* Post List Design */
-.post {
+.post,
+.post-content {
   flex: 2; /* 본문 비중 확대 */
 }
 /* Post Card List Styling - Minimalist Version (No Image) */
@@ -190,9 +195,11 @@ a {
   margin-bottom: 18px;
   line-height: 1.2;
 }
-
+.post-title a {
+  transition: color 0.2s ease;
+}
 .post-title a:hover {
-  text-decoration: underline; /* 텍스트 중심 디자인이므로 밑줄로 강조 */
+  color: var(--main-color);
   text-underline-offset: 6px;
 }
 
@@ -239,7 +246,7 @@ a {
   padding: 30px;
   width: 100%;
   margin-bottom: 40px;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
 /* Header */
@@ -380,7 +387,7 @@ a {
     row-gap: 30px;
     flex-direction: column;
     background: var(--third-background-color);
-    transition: all 0.4s ease;
+    transition: all 0.2s ease;
   }
   .nav.openNav .nav-links {
     left: 0;
