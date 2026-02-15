@@ -227,7 +227,274 @@ a {
 .post-tags a:hover {
   color: var(--main-color);
 }
+/* --- View Page (vp-) Specific Styles --- */
 
+/* 레이아웃 깨짐 방지의 핵심 */
+.vp-container {
+  flex: 2;
+  min-width: 0; /* 중요: 내부 컨텐츠가 사이드바를 밀어내는 것을 방지 */
+  background: var(--second-background-color);
+  padding: clamp(20px, 5vw, 45px);
+  border-radius: 12px;
+  border: 1px solid var(--third-background-color);
+  box-sizing: border-box;
+}
+
+/* 뒤로가기 버튼 영역 */
+.vp-nav-header {
+  margin-bottom: 25px;
+}
+
+.vp-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sub-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.vp-back-btn i {
+  font-size: 1rem;
+  transition: 0.2s;
+}
+.vp-back-btn:hover {
+  color: var(--main-color);
+}
+.vp-back-btn:hover i {
+  transform: translateX(-4px);
+}
+
+/* 타이틀 섹션 */
+.vp-title-area {
+  margin-bottom: 35px;
+  border-bottom: 1px solid var(--third-background-color);
+  padding-bottom: 25px;
+}
+
+.vp-badge {
+  display: inline-block;
+  color: var(--main-color);
+  background: rgba(51, 255, 184, 0.1);
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.vp-main-title {
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  color: var(--main-text);
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+.vp-meta-row {
+  display: flex;
+
+  gap: 15px;
+  color: var(--sub-text);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.vp-meta-row i {
+  font-size: 1rem;
+}
+.vp-meta-row span {
+  display: flex;
+  align-items: center;
+}
+/* 본문 가독성 설정 */
+.vp-article-body {
+  color: var(--main-text);
+  line-height: 1.9;
+  font-weight: 500; /* 본문 가독성 위해 800에서 하향 */
+}
+
+.vp-sub-title {
+  font-size: 1.45rem;
+  color: var(--main-color);
+  margin: 45px 0 20px;
+  display: flex;
+  align-items: center;
+}
+
+.vp-sub-title::before {
+  content: "";
+  width: 4px;
+  height: 1.1rem;
+  background: var(--main-color);
+  margin-right: 12px;
+  border-radius: 2px;
+}
+
+/* 코드 블록 (Terminal Style) */
+.vp-code-box {
+  background: #0d0f14;
+  border: 1px solid var(--third-background-color);
+  border-radius: 8px;
+  margin: 30px 0;
+  overflow: hidden;
+}
+
+.vp-code-info {
+  background: var(--third-background-color);
+  padding: 10px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vp-lang-label {
+  font-size: 0.75rem;
+  color: var(--main-color);
+  font-family: monospace;
+}
+
+.vp-copy {
+  font-size: 1.1rem;
+  color: var(--sub-text);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.vp-copy:hover {
+  color: var(--main-color);
+}
+
+.vp-code-box pre {
+  padding: 20px;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.vp-code-box code {
+  font-family: "Consolas", monospace;
+  font-size: 0.95rem;
+  color: #cbd5e0;
+  font-weight: 400;
+}
+
+/* 콜아웃 노티 */
+.vp-note {
+  border-left: 4px solid var(--main-color);
+  background: var(--third-background-color);
+  padding: 20px;
+  margin: 35px 0;
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
+}
+
+/* 하단 태그 */
+.vp-tag-area {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vp-tag-area a {
+  background: var(--third-background-color);
+  color: var(--sub-text);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: 0.2s;
+}
+
+.vp-tag-area a:hover {
+  background: var(--main-color);
+  color: #000;
+}
+/* --- Category Page Simple List Styles --- */
+
+.ct-main-section {
+  width: 100%;
+  min-width: 0;
+}
+
+.ct-list-header {
+  margin-bottom: 40px;
+  border-bottom: 2px solid var(--third-background-color);
+  padding-bottom: 20px;
+}
+
+.ct-list-title {
+  font-size: 2rem;
+  color: var(--main-text);
+  font-weight: 800;
+}
+
+.ct-list-desc {
+  color: var(--sub-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+/* 리스트 컨테이너 */
+.ct-simple-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 개별 리스트 아이템: 호버 효과 완전 제거 */
+.ct-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0;
+  border-bottom: 1px solid var(--third-background-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 호버 방지: 기존 style.css에 호버 설정이 있어도 무시하도록 강제 설정 */
+.ct-list-item:hover {
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.ct-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ct-item-name {
+  font-size: 1.3rem;
+  color: var(--main-text);
+  font-weight: 800;
+}
+
+.ct-item-detail {
+  font-size: 0.85rem;
+  color: var(--sub-text);
+  font-weight: 500;
+}
+
+.ct-item-count {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: var(--main-color);
+  font-weight: 800;
+}
+
+/* 마지막 아이템 구분선 제거 */
+.ct-list-item:last-child {
+  border-bottom: none;
+}
+/* 반응형 보정 */
+@media screen and (max-width: 1024px) {
+  .vp-container {
+    width: 100%;
+  }
+}
 /* Aside (Sidebar) Design */
 .about {
   flex: 1;

@@ -44,8 +44,73 @@
       </nav>
     </header>
     <main class="blog-wrapper">
-      <section class="post-content"></section>
+      <section class="post-content vp-container">
+        <div class="vp-nav-header">
+          <a href="./index.html" class="vp-back-btn">
+            <i class="material-symbols-rounded">arrow_back_ios_new</i>
+            <span>Back to List</span>
+          </a>
+        </div>
 
+        <div class="vp-title-area">
+          <span class="vp-badge">System Security</span>
+          <h1 class="vp-main-title">
+            Linux Kernel Exploit: Race Condition Analysis
+          </h1>
+          <div class="vp-meta-row">
+            <span
+              ><i class="material-symbols-rounded">calendar_month</i>
+              2026.02.15</span
+            >
+            <span
+              ><i class="material-symbols-rounded">person</i> Secovate200</span
+            >
+          </div>
+        </div>
+
+        <div class="vp-article-body">
+          <p>
+            본 포스트에서는 리눅스 커널의 권한 상승 취약점을 분석합니다. 특히
+            KASLR 및 SMEP 환경에서의 페이로드 구성 방식을 중점적으로 다룹니다.
+          </p>
+
+          <h2 class="vp-sub-title">Vulnerability Context</h2>
+          <p>
+            공격자는 특정 시스템 콜의 경쟁 상태를 이용하여 메모리 손상을 유발할
+            수 있습니다. 아래는 해당 취약점의 핵심 C 코드 스니펫입니다.
+          </p>
+
+          <div class="vp-code-box">
+            <div class="vp-code-info">
+              <span class="vp-lang-label">C++ / Kernel</span>
+              <span
+                class="material-symbols-rounded vp-copy"
+                onclick="alert('Copied!')"
+                >content_copy</span
+              >
+            </div>
+            <pre><code>// Exploit Logic: Kalloc/Kfree Race
+void trigger_uaf() {
+    int fd = open("/dev/vulnerable_device", O_RDWR);
+    ioctl(fd, CMD_ALLOC, NULL);
+    // Thread 1: kfree(ptr)
+    // Thread 2: access(ptr)
+    ioctl(fd, CMD_FREE, NULL);
+}</code></pre>
+          </div>
+
+          <blockquote class="vp-note">
+            연구원 코멘트: 실제 환경에서는 KASLR 우회를 위해 커널 베이스 주소를
+            먼저 릭(Leak)해야 합니다.
+          </blockquote>
+        </div>
+
+        <div class="vp-tag-area">
+          <a href="#">#Kernel</a>
+          <a href="#">#Pwnable</a>
+          <a href="#">#Security_Research</a>
+        </div>
+      </section>
       <aside class="about">
         <div class="about-card">
           <div class="card-header">
