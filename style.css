@@ -12,6 +12,9 @@
   --font-title: 3rem; /* 48px */
 }
 * {
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 800;
+  font-style: normal;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
