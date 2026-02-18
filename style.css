@@ -1,29 +1,38 @@
+:root {
+  /* 기준 폰트 사이즈 */
+  --font-base: 1k6px;
+
+  /* 단계별 사이즈 정의 (T-shirt sizing 방식) */
+  --font-xs: 0.75rem; /* 12px */
+  --font-sm: 0.875rem; /* 14px */
+  --font-md: 1rem; /* 16px (기본) */
+  --font-lg: 1.25rem; /* 20px */
+  --font-xl: 1.5rem; /* 24px */
+  --font-xxl: 2rem; /* 32px */
+  --font-title: 3rem; /* 48px */
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  height: 100%;
+html {
+  overscroll-behavior: none;
+}
+
+.nav-wrapper {
+  font-size: var(--font-xl);
+  width: 100vw;
+  background: red;
+}
+.nav-wrapper .nav {
   width: 100%;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: 60px 1fr;
-  grid-template-areas:
-    "sidebar header"
-    "sidebar main";
+  max-width: 1400px;
+  margin: auto auto;
+  background-color: green;
 }
-.header {
-  grid-area: header;
-  background-color: #fff;
-}
-.sidebar {
-  grid-area: sidebar;
-  background-color: #1c1f23;
-  height: 100vh;
-}
-.main {
-  grid-area: main;
-  background-color: #c3c5ca;
-  padding: 20px;
+main .blog-wrapper {
+  max-width: 1400px;
+  margin: auto auto;
+  background: gray;
 }
