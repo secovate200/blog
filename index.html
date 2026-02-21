@@ -8,24 +8,140 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>secovate200's blog</title>
   </head>
   <body>
     <header class="nav-wrapper">
       <nav class="nav">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut blanditiis
-        praesentium tempora dolor necessitatibus quis labore exercitationem
-        suscipit, magni nam omnis impedit quod mollitia. Molestias vitae quam
-        reprehenderit assumenda fugit?
+        <span class="material-symbols-rounded navOpenBtn"> menu </span>
+        <a href="#" class="logo"><img src="./logo.png" alt="" srcset="" /></a>
+        <ul class="nav-links">
+          <span class="material-symbols-rounded navCloseBtn"> close </span>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Category</a></li>
+          <li><a href="#">Project</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Dashboard</a></li>
+        </ul>
+        <div>
+          <span class="material-symbols-rounded search-icon" id="search-icon">
+            search
+          </span>
+          <span class="material-symbols-rounded theme-toggle">
+            light_mode
+          </span>
+        </div>
+        <form class="search-box" method="post">
+          <span class="material-symbols-rounded search-icon"> search </span>
+          <input type="text" placeholder="Search.." />
+        </form>
       </nav>
     </header>
     <main>
-      <div class="blog-wrapper">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum ipsum
-        earum ad voluptatem hic, commodi blanditiis, iste dolor placeat et autem
-        doloremque in, quod dolore veritatis magnam similique explicabo alias!
-      </div>
+      <section class="blog-wrapper">
+        <section class="post">
+          <article class="post-item">
+            <div class="post-info">
+              <a href=""> <span class="category">SECURITY</span></a>
+
+              <a href="">
+                <h2 class="title">웹 취약점 진단 AI 자동화 도구 개발기</h2></a
+              >
+              <p class="desc">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Laboriosam tenetur unde esse dolorem, dolor delectus, soluta
+                quia culpa porro accusantium ex temporibus adipisci eveniet nam
+                eaque iure, voluptas officiis vitae. Necessitatibus culpa
+                expedita quod placeat commodi corporis sunt architecto earum.
+              </p>
+              <div class="tag-group">
+                <a href=""><span class="tag">#BugBounty</span></a>
+                <a href=""><span class="tag">#Python</span></a>
+                <a href=""><span class="tag">#AI</span></a>
+                <a href=""><span class="tag">#PoC</span></a>
+                <a href=""><span class="tag">#Hacking</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="post-item">
+            <div class="post-info">
+              <a href=""> <span class="category">DEVELOPMENT</span></a>
+              <a href="#">
+                <h2 class="title">
+                  도커 환경에서의 마이크로서비스 아키텍처 구축
+                </h2></a
+              >
+              <p class="desc">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque
+                laudantium similique odit cupiditate, fugit quidem veniam sunt
+                sit quae velit? Fugit, maiores in aperiam blanditiis illum aut
+                corrupti consectetur tenetur fugiat consequatur. Est quasi odio
+                reprehenderit officia laudantium sapiente distinctio!
+              </p>
+              <div class="tag-group">
+                <a href=""><span class="tag">#Backend</span></a>
+                <a href=""><span class="tag">#Docker</span></a>
+                <a href=""><span class="tag">#Microservices</span></a>
+                <a href=""><span class="tag">#DevOps</span></a>
+                <a href=""><span class="tag">#Linux</span></a>
+              </div>
+            </div>
+          </article>
+          <div class="load-more-container">
+            <button type="button" class="load-more-btn">
+              <span>Load More</span>
+            </button>
+          </div>
+        </section>
+        <aside class="side">
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-img">
+                <img src="./logo.png" alt="Secovate Logo" />
+              </div>
+            </div>
+
+            <div class="profile-body">
+              <h3 class="profile-name">Secovate</h3>
+              <p class="profile-job">Security & Backend Dev</p>
+              <p class="profile-bio">
+                시스템 취약점을 분석하고<br />견고한 백엔드를 설계합니다.
+              </p>
+            </div>
+
+            <div class="profile-stats">
+              <div class="stat-unit">
+                <span class="stat-num">24</span>
+                <span class="stat-label">Proj</span>
+              </div>
+              <div class="stat-unit">
+                <span class="stat-num">1.2k</span>
+                <span class="stat-label">Comm</span>
+              </div>
+              <div class="stat-unit">
+                <span class="stat-num">8</span>
+                <span class="stat-label">Tools</span>
+              </div>
+            </div>
+
+            <div class="profile-footer">
+              <a href="mailto:secovate@example.com" class="btn-outline"
+                >Email</a
+              >
+              <a href="https://portfolio.com" target="_blank" class="btn-fill"
+                >Hire</a
+              >
+            </div>
+          </div>
+        </aside>
+      </section>
     </main>
+    <script src="./scripts.js"></script>
   </body>
 </html>
