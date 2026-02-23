@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link rel="shortcut icon" href="../logo.png" type="image/x-icon" />
+    <title>Secovate200's dashboard</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <img src="../logo.png" alt="" />
+          <span class="material-symbols-rounded" id="sidebar-toggle">
+            menu
+          </span>
+        </div>
+
+        <div class="search-bar">
+          <span class="material-symbols-rounded"> search </span>
+          <input type="text" placeholder="Search here..." />
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="material-symbols-rounded theme-toggle"> dark_mode </span>
+        <span class="material-symbols-rounded"> logout </span>
+      </div>
+    </header>
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="#" class="nav-item"
+          ><span class="material-symbols-rounded"> home </span>
+          <span>Home</span></a
+        >
+        <a href="#" class="nav-item"
+          ><span class="material-symbols-rounded"> post </span>
+          <span>Blog</span></a
+        >
+        <a href="#" class="nav-item"
+          ><span class="material-symbols-rounded"> bookmark </span>
+          <span>Research</span></a
+        >
+        <a href="#" class="nav-item"
+          ><span class="material-symbols-rounded"> bookmark </span>
+          <span>Users</span></a
+        >
+        <a href="#" class="nav-item"
+          ><span class="material-symbols-rounded"> bookmark </span>
+          <span>Services</span></a
+        >
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-symbols-rounded"> group </span>
+          </div>
+          <div class="stat-info">
+            <h3>200</h3>
+            <p>Total User's</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-symbols-rounded"> rocket_launch </span>
+          </div>
+          <div class="stat-info">
+            <h3>200</h3>
+            <p>Total Services's</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-symbols-rounded"> bookmark </span>
+          </div>
+          <div class="stat-info">
+            <h3>200</h3>
+            <p>Total Categories's</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <span class="material-symbols-rounded"> post </span>
+          </div>
+          <div class="stat-info">
+            <h3>200</h3>
+            <p>Total Post's</p>
+          </div>
+        </div>
+      </div>
+      <div class="chart-section">
+        <div class="chart-container large">
+          <div class="chart-header">
+            <h3>Traffic</h3>
+            <select name="data-filter" id="traffic-chart" class="chart-filter">
+              <option value="Day">24h</option>
+              <option value="hour">1h</option>
+            </select>
+          </div>
+          <canvas id="trafficCahrt"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3>recent post</h3>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./dashboardscript.js"></script>
+  </body>
+</html>
