@@ -21,13 +21,20 @@ navOpenBtn.addEventListener("click", () => {
 navCloseBtn.addEventListener("click", () => {
   nav.classList.remove("openNav");
 });
-themeToggle.addEventListener("click", () => {
-  if (themeToggle.textContent === "dark_mode") {
-    themeToggle.textContent = "light_mode";
-    body.classList.remove("darkmode");
-  } else {
-    themeToggle.textContent = "dark_mode";
+// 페이지 로드 시 로컬 스토리지에서 테마 확인
+if (localStorage.getItem("theme") === "dark") {
+  body.classList.add("darkmode");
+  themeToggle.textContent = "light_mode";
+}
 
+themeToggle.addEventListener("click", () => {
+  if (body.classList.contains("darkmode")) {
+    body.classList.remove("darkmode");
+    themeToggle.textContent = "dark_mode";
+    localStorage.setItem("theme", "light"); // 상태 저장
+  } else {
     body.classList.add("darkmode");
+    themeToggle.textContent = "light_mode";
+    localStorage.setItem("theme", "dark"); // 상태 저장
   }
 });

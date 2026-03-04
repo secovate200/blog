@@ -59,6 +59,7 @@ body.darkmode {
   left: 0;
   gap: 20px;
   border-bottom: 1px solid var(--sub-text);
+  z-index: 100;
 }
 .nav-wrapper .nav {
   width: 100%;
@@ -128,6 +129,7 @@ a {
   left: 15px;
   transform: translateY(-50%);
 }
+
 .nav .search-box input {
   height: 100%;
   width: 100%;

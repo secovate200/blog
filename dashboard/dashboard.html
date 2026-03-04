@@ -3,117 +3,1102 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="shortcut icon" href="../logo.png" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
     />
-    <link rel="shortcut icon" href="../logo.png" type="image/x-icon" />
-    <title>Secovate200's dashboard</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Dashboard - secovate200's blog</title>
+    <style>
+      /* --- 대시보드 전용 스타일 --- */
+
+      /* 전체 레이아웃 (사이드바 + 메인 콘텐츠) */
+      .dash-layout {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 15px;
+        display: flex;
+        gap: 30px;
+      }
+
+      /* 사이드바 스타일 */
+      .dash-sidebar {
+        width: 260px;
+        flex-shrink: 0;
+        background: var(--secondary-background);
+        border: 1px solid var(--third-background);
+        border-radius: 16px;
+        padding: 20px 10px;
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+
+      .dash-nav {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .dash-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        border-radius: 12px;
+        color: var(--sub-text);
+        font-weight: 800;
+        font-size: var(--font-sm);
+        transition: all 0.2s linear;
+        text-decoration: none;
+        white-space: nowrap; /* 모바일 가로 스크롤 시 줄바꿈 방지 */
+      }
+
+      .dash-nav-link:hover,
+      .dash-nav-link.active {
+        background: rgba(0, 163, 118, 0.1);
+        color: var(--main-color);
+      }
+
+      .dash-nav-link .material-symbols-rounded {
+        font-size: 22px;
+      }
+
+      /* 사이드바 구분선 (인라인 스타일 분리) */
+      .nav-divider {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 1px solid var(--third-background);
+      }
+
+      /* 메인 콘텐츠 영역 */
+      .dash-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        min-width: 0;
+      }
+
+      /* 카드 공통 스타일 */
+      .dash-card {
+        background: var(--secondary-background);
+        border: 1px solid var(--third-background);
+        border-radius: 16px;
+        padding: 24px;
+        transition: all 0.2s linear;
+      }
+
+      .dash-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .dash-card-title {
+        font-size: var(--font-lg);
+        color: var(--main-text);
+        font-weight: 800;
+      }
+
+      /* 1. 최상단 통계 그리드 (기본 4칸) */
+      .dash-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .stat-label {
+        font-size: var(--font-sm);
+        color: var(--sub-text);
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: var(--font-xl);
+        color: var(--main-text);
+        font-weight: 800;
+      }
+
+      .stat-icon {
+        background: var(--third-background);
+        color: var(--main-color);
+        padding: 10px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .stat-bottom {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        font-size: var(--font-xs);
+        gap: 8px;
+      }
+
+      .trend {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        font-weight: 800;
+      }
+      .trend.up {
+        color: var(--main-color);
+      }
+      .trend.down {
+        color: #e74c3c;
+      }
+      .trend-vs {
+        color: var(--sub-text);
+      }
+
+      /* 2. 메인 그리드 (차트 2 : 상태 1) */
+      .dash-main-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        gap: 25px;
+      }
+
+      /* 라인 차트 영역 */
+      .line-chart-container {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        padding-top: 10px;
+      }
+
+      .chart-select {
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: 1px solid var(--third-background);
+        background: var(--secondary-background);
+        color: var(--main-text);
+        outline: none;
+        font-size: var(--font-xs);
+        font-weight: 800;
+      }
+
+      /* 도커 컨테이너 상태 리스트 */
+      .status-badge {
+        background: rgba(0, 163, 118, 0.1);
+        color: var(--main-color);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: var(--font-xs);
+        font-weight: 800;
+      }
+
+      .system-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .system-item {
+        border: 1px solid var(--third-background);
+        border-radius: 12px;
+        padding: 15px;
+        transition: background 0.2s;
+      }
+
+      .system-item:hover {
+        background: var(--main-background);
+      }
+
+      .sys-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .sys-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--font-sm);
+        color: var(--main-text);
+        font-weight: 800;
+      }
+
+      .sys-state {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: var(--font-xs);
+        color: var(--main-color);
+        font-weight: 800;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--main-color);
+        border-radius: 50%;
+      }
+
+      .pulse {
+        animation: pulse-animation 2s infinite;
+      }
+
+      @keyframes pulse-animation {
+        0% {
+          box-shadow: 0 0 0 0 rgba(0, 163, 118, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 6px rgba(0, 163, 118, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 163, 118, 0);
+        }
+      }
+
+      .sys-metrics {
+        display: flex;
+        justify-content: space-between;
+        font-size: var(--font-xs);
+        color: var(--sub-text);
+      }
+
+      .sys-metrics span strong {
+        color: var(--main-text);
+      }
+
+      /* 3. 듀얼 테이블 영역 */
+      .tables-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 25px;
+      }
+
+      .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      .dash-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        min-width: 450px; /* 스크롤 생성을 위한 최소 너비 */
+      }
+
+      .dash-table th,
+      .dash-table td {
+        padding: 14px 10px;
+        border-bottom: 1px solid var(--third-background);
+      }
+
+      .dash-table th {
+        font-size: 11px;
+        color: var(--sub-text);
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+
+      .dash-table td {
+        font-size: var(--font-sm);
+        color: var(--main-text);
+      }
+
+      .dash-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .dash-table tr:hover {
+        background: var(--main-background);
+      }
+
+      .td-title-text {
+        display: block;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 800;
+      }
+
+      /* 태그 및 상태 뱃지 */
+      .cat-tag {
+        font-size: 10px;
+        color: var(--sub-text);
+        font-weight: 800;
+        padding: 2px 6px;
+        background: var(--main-background);
+        border: 1px solid var(--third-background);
+        border-radius: 4px;
+      }
+
+      .status-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .status-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+      .status-tag.published {
+        background: rgba(0, 163, 118, 0.1);
+        color: var(--main-color);
+      }
+      .status-tag.published::before {
+        background: var(--main-color);
+      }
+
+      .status-tag.draft {
+        background: rgba(243, 156, 18, 0.1);
+        color: #f39c12;
+      }
+      .status-tag.draft::before {
+        background: #f39c12;
+      }
+
+      .status-tag.active {
+        background: rgba(52, 152, 219, 0.1);
+        color: #3498db;
+      }
+      .status-tag.active::before {
+        background: #3498db;
+      }
+
+      .table-actions {
+        display: flex;
+        gap: 4px;
+        justify-content: flex-end;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        color: var(--sub-text);
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+      .action-btn:hover {
+        color: var(--main-color);
+        background: var(--third-background);
+      }
+
+      /* =========================================
+         반응형 (Responsive) 미디어 쿼리 시작 
+         ========================================= */
+
+      /* 1. 데스크탑 작은 화면 및 테블릿 가로 */
+      @media screen and (max-width: 1200px) {
+        .tables-grid {
+          grid-template-columns: minmax(0, 1fr); /* 테이블 영역 세로로 배치 */
+        }
+        .td-title-text {
+          max-width: none; /* 테이블 너비 확보 시 말줄임 해제 */
+        }
+      }
+
+      /* 2. 테블릿 및 모바일 가로 */
+      @media screen and (max-width: 950px) {
+        .dash-layout {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        /* 사이드바를 가로 스크롤 메뉴로 변경 */
+        .dash-sidebar {
+          width: 100%;
+          position: relative;
+          top: 0;
+          padding: 10px;
+        }
+
+        .dash-nav {
+          flex-direction: row;
+          overflow-x: auto;
+          padding-bottom: 5px; /* 스크롤바 여백 */
+        }
+
+        /* 스크롤바 스타일링 (웹킷 브라우저) */
+        .dash-nav::-webkit-scrollbar {
+          height: 6px;
+        }
+        .dash-nav::-webkit-scrollbar-thumb {
+          background: var(--third-background);
+          border-radius: 10px;
+        }
+
+        .nav-divider {
+          margin-top: 0;
+          padding-top: 0;
+          border-top: none;
+          border-left: 1px solid var(--third-background);
+          padding-left: 10px;
+          margin-left: 5px;
+          display: flex;
+        }
+
+        .dash-main-grid {
+          grid-template-columns: minmax(
+            0,
+            1fr
+          ); /* 메인 차트 및 시스템 상태 세로 배치 */
+        }
+
+        .dash-stats-grid {
+          grid-template-columns: repeat(
+            2,
+            minmax(0, 1fr)
+          ); /* 통계 카드 2칸으로 변경 */
+        }
+      }
+
+      /* 3. 모바일 세로 */
+      @media screen and (max-width: 768px) {
+        .dash-layout {
+          padding: 20px 10px; /* 전체 여백 축소 */
+        }
+
+        .dash-card {
+          padding: 20px 15px; /* 카드 내부 여백 축소 */
+        }
+
+        .dash-card-header {
+          margin-bottom: 15px;
+        }
+      }
+
+      /* 4. 아주 작은 스마트폰 화면 */
+      @media screen and (max-width: 576px) {
+        .dash-stats-grid {
+          grid-template-columns: minmax(0, 1fr); /* 통계 카드 1칸으로 꽉 채움 */
+          gap: 15px;
+        }
+
+        .line-chart-container {
+          height: 200px; /* 모바일에서 차트 높이 살짝 축소 */
+        }
+      }
+    </style>
   </head>
   <body>
-    <header class="header">
-      <div class="header-left">
-        <div class="logo">
-          <img src="../logo.png" alt="" />
-          <span class="material-symbols-rounded" id="sidebar-toggle">
-            menu
+    <!-- 네비게이션 바 -->
+    <header class="nav-wrapper">
+      <nav class="nav">
+        <span class="material-symbols-rounded navOpenBtn"> menu </span>
+        <a href="#" class="logo"><img src="../logo.png" alt="" srcset="" /></a>
+        <ul class="nav-links">
+          <span class="material-symbols-rounded navCloseBtn"> close </span>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../category.html">Category</a></li>
+          <li><a href="../project.html">Project</a></li>
+          <li><a href="./dashboard.html">Dashboard</a></li>
+        </ul>
+        <div>
+          <span class="material-symbols-rounded search-icon" id="search-icon">
+            search
+          </span>
+          <span class="material-symbols-rounded theme-toggle">
+            light_mode
           </span>
         </div>
-
-        <div class="search-bar">
-          <span class="material-symbols-rounded"> search </span>
-          <input type="text" placeholder="Search here..." />
-        </div>
-      </div>
-      <div class="header-right">
-        <span class="material-symbols-rounded theme-toggle"> dark_mode </span>
-        <span class="material-symbols-rounded"> logout </span>
-      </div>
-    </header>
-    <aside class="sidebar">
-      <nav class="nav-menu">
-        <a href="#" class="nav-item"
-          ><span class="material-symbols-rounded"> home </span>
-          <span>Home</span></a
-        >
-        <a href="#" class="nav-item"
-          ><span class="material-symbols-rounded"> post </span>
-          <span>Blog</span></a
-        >
-        <a href="#" class="nav-item"
-          ><span class="material-symbols-rounded"> bookmark </span>
-          <span>Research</span></a
-        >
-        <a href="#" class="nav-item"
-          ><span class="material-symbols-rounded"> bookmark </span>
-          <span>Users</span></a
-        >
-        <a href="#" class="nav-item"
-          ><span class="material-symbols-rounded"> bookmark </span>
-          <span>Services</span></a
-        >
+        <form class="search-box" method="get" action="../index.html">
+          <span class="material-symbols-rounded search-icon"> search </span>
+          <input type="text" placeholder="Search.." />
+        </form>
       </nav>
-    </aside>
-    <main class="main-content">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">
-            <span class="material-symbols-rounded"> group </span>
-          </div>
-          <div class="stat-info">
-            <h3>200</h3>
-            <p>Total User's</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <span class="material-symbols-rounded"> rocket_launch </span>
-          </div>
-          <div class="stat-info">
-            <h3>200</h3>
-            <p>Total Services's</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <span class="material-symbols-rounded"> bookmark </span>
-          </div>
-          <div class="stat-info">
-            <h3>200</h3>
-            <p>Total Categories's</p>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <span class="material-symbols-rounded"> post </span>
-          </div>
-          <div class="stat-info">
-            <h3>200</h3>
-            <p>Total Post's</p>
-          </div>
-        </div>
-      </div>
-      <div class="chart-section">
-        <div class="chart-container large">
-          <div class="chart-header">
-            <h3>Traffic</h3>
-            <select name="data-filter" id="traffic-chart" class="chart-filter">
-              <option value="Day">24h</option>
-              <option value="hour">1h</option>
-            </select>
-          </div>
-          <canvas id="trafficCahrt"></canvas>
-        </div>
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3>recent post</h3>
-          </div>
-        </div>
-      </div>
-    </main>
+    </header>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./dashboardscript.js"></script>
+    <main>
+      <section class="dash-layout">
+        <!-- 대시보드 사이드바 네비게이션 -->
+        <aside class="dash-sidebar">
+          <ul class="dash-nav">
+            <li>
+              <a href="#" class="dash-nav-link active">
+                <span class="material-symbols-rounded">dashboard</span> 대시보드
+                홈
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dash-nav-link">
+                <span class="material-symbols-rounded">edit_document</span>
+                블로그 관리
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dash-nav-link">
+                <span class="material-symbols-rounded">science</span> 연구 관리
+              </a>
+            </li>
+            <li class="nav-divider">
+              <a href="#" class="dash-nav-link">
+                <span class="material-symbols-rounded">dns</span> 서비스 관리
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dash-nav-link">
+                <span class="material-symbols-rounded">settings</span> 환경 설정
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <!-- 대시보드 메인 콘텐츠 영역 -->
+        <div class="dash-content">
+          <!-- 1. 핵심 지표 그리드 -->
+          <div class="dash-stats-grid">
+            <div class="dash-card">
+              <div class="stat-top">
+                <div>
+                  <p class="stat-label">전체 게시글</p>
+                  <h3 class="stat-value">142</h3>
+                </div>
+                <div class="stat-icon">
+                  <span class="material-symbols-rounded">article</span>
+                </div>
+              </div>
+              <div class="stat-bottom">
+                <span class="trend up">3개</span>
+                <span class="trend-vs">이번 주 발행</span>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="stat-top">
+                <div>
+                  <p class="stat-label">운영 카테고리</p>
+                  <h3 class="stat-value">6</h3>
+                </div>
+                <div class="stat-icon">
+                  <span class="material-symbols-rounded">category</span>
+                </div>
+              </div>
+              <div class="stat-bottom">
+                <span class="trend up"> 1개</span>
+                <span class="trend-vs">신규 카테고리</span>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="stat-top">
+                <div>
+                  <p class="stat-label">등록된 프로젝트</p>
+                  <h3 class="stat-value">24</h3>
+                </div>
+                <div class="stat-icon">
+                  <span class="material-symbols-rounded">folder_special</span>
+                </div>
+              </div>
+              <div class="stat-bottom">
+                <span class="trend up"
+                  ><span
+                    class="material-symbols-rounded"
+                    style="font-size: 16px"
+                    >add</span
+                  >+2개</span
+                >
+                <span class="trend-vs">이번 달 추가</span>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="stat-top">
+                <div>
+                  <p class="stat-label">사용된 태그</p>
+                  <h3 class="stat-value">48</h3>
+                </div>
+                <div class="stat-icon">
+                  <span class="material-symbols-rounded">tag</span>
+                </div>
+              </div>
+              <div class="stat-bottom">
+                <span class="trend up"
+                  ><span
+                    class="material-symbols-rounded"
+                    style="font-size: 16px"
+                    >add</span
+                  >+5개</span
+                >
+                <span class="trend-vs">신규 태그</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. 차트 (라인 차트) & 컨테이너 상태 -->
+          <div class="dash-main-grid">
+            <!-- 주간 방문자 트래픽 (라인 차트) -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">주간 방문자 트래픽</h3>
+                <select class="chart-select">
+                  <option>최근 7일</option>
+                  <option>최근 30일</option>
+                </select>
+              </div>
+
+              <div class="line-chart-container">
+                <canvas id="trafficChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Docker 컨테이너 모니터링 -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">컨테이너 상태</h3>
+                <span class="status-badge">All Healthy</span>
+              </div>
+              <div class="system-list">
+                <div class="system-item">
+                  <div class="sys-header">
+                    <div class="sys-name">
+                      <span
+                        class="material-symbols-rounded"
+                        style="color: var(--sub-text); font-size: 20px"
+                        >web</span
+                      >
+                      Blog Frontend
+                    </div>
+                    <div class="sys-state">
+                      <div class="dot pulse"></div>
+                      Running
+                    </div>
+                  </div>
+                  <div class="sys-metrics">
+                    <span>Uptime: <strong>99.9%</strong></span>
+                  </div>
+                </div>
+                <div class="system-item">
+                  <div class="sys-header">
+                    <div class="sys-name">
+                      <span
+                        class="material-symbols-rounded"
+                        style="color: var(--sub-text); font-size: 20px"
+                        >dns</span
+                      >
+                      Dashboard API
+                    </div>
+                    <div class="sys-state">
+                      <div class="dot pulse"></div>
+                      Running
+                    </div>
+                  </div>
+                  <div class="sys-metrics">
+                    <span>Uptime: <strong>99.9%</strong></span>
+                  </div>
+                </div>
+                <div class="system-item">
+                  <div class="sys-header">
+                    <div class="sys-name">
+                      <span
+                        class="material-symbols-rounded"
+                        style="color: var(--sub-text); font-size: 20px"
+                        >database</span
+                      >
+                      PostgreSQL DB
+                    </div>
+                    <div class="sys-state">
+                      <div class="dot pulse"></div>
+                      Running
+                    </div>
+                  </div>
+                  <div class="sys-metrics">
+                    <span>Uptime: <strong>100%</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. 듀얼 테이블 (최근 게시글 & 연구 프로젝트) -->
+          <div class="tables-grid">
+            <!-- 왼쪽: 최근 포스트 (Top 5) -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">Top 5 Posts</h3>
+                <a
+                  href="#"
+                  style="font-size: var(--font-xs); color: var(--sub-text)"
+                  >View All &rarr;</a
+                >
+              </div>
+              <div class="table-responsive">
+                <table class="dash-table">
+                  <thead>
+                    <tr>
+                      <th>분류</th>
+                      <th>게시글 제목</th>
+                      <th>상태</th>
+                      <th style="text-align: right">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="cat-tag">SEC</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >웹 취약점 진단 AI 자동화 도구 개발기</span
+                        >
+                      </td>
+                      <td><span class="status-tag published">발행됨</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">DEV</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >도커 환경 마이크로서비스 아키텍처 구축</span
+                        >
+                      </td>
+                      <td><span class="status-tag published">발행됨</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">UX</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >대시보드 UI 디자인 패턴 적용기</span
+                        >
+                      </td>
+                      <td><span class="status-tag draft">임시저장</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">SEC</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >제로트러스트 보안 모델과 적용 사례</span
+                        >
+                      </td>
+                      <td><span class="status-tag published">발행됨</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">AI</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >로컬 LLM을 활용한 코드 리뷰 봇</span
+                        >
+                      </td>
+                      <td><span class="status-tag published">발행됨</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 오른쪽: 연구/프로젝트 (Top 5) -->
+            <div class="dash-card">
+              <div class="dash-card-header">
+                <h3 class="dash-card-title">Top 5 Projects</h3>
+                <a
+                  href="#"
+                  style="font-size: var(--font-xs); color: var(--sub-text)"
+                  >View All &rarr;</a
+                >
+              </div>
+              <div class="table-responsive">
+                <table class="dash-table">
+                  <thead>
+                    <tr>
+                      <th>타입</th>
+                      <th>프로젝트/연구명</th>
+                      <th>진행상태</th>
+                      <th style="text-align: right">관리</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="cat-tag">TOOL</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >LLM-Powered Vuln Scanner</span
+                        >
+                      </td>
+                      <td><span class="status-tag active">진행중</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">RESEARCH</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >Web3 스마트 컨트랙트 보안 결함</span
+                        >
+                      </td>
+                      <td><span class="status-tag draft">대기중</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">TOOL</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >Automated Bug Bounty Script</span
+                        >
+                      </td>
+                      <td><span class="status-tag published">완료됨</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">INFRA</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >개인 쿠버네티스 클러스터 셋업</span
+                        >
+                      </td>
+                      <td><span class="status-tag active">진행중</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="cat-tag">RESEARCH</span></td>
+                      <td>
+                        <span class="td-title-text"
+                          >OAuth 2.0 우회 기법 분석 리포트</span
+                        >
+                      </td>
+                      <td><span class="status-tag published">완료됨</span></td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="action-btn">
+                            <span
+                              class="material-symbols-rounded"
+                              style="font-size: 16px"
+                              >edit</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="../scripts.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById("trafficChart").getContext("2d");
+
+        // CSS 변수 연동을 위한 스타일 가져오기
+        const getCSSVar = (varName, fallback) => {
+          return (
+            getComputedStyle(document.body).getPropertyValue(varName).trim() ||
+            fallback
+          );
+        };
+
+        let trafficChart;
+
+        const initChart = () => {
+          const mainColor = getCSSVar("--main-color", "#00a376");
+          const subText = getCSSVar("--sub-text", "#5f7d75");
+          const thirdBg = getCSSVar("--third-background", "#e0eee9");
+          const secBg = getCSSVar("--secondary-background", "#ffffff");
+
+          let gradient = ctx.createLinearGradient(0, 0, 0, 250);
+          gradient.addColorStop(0, mainColor + "66"); // 40% opacity
+          gradient.addColorStop(1, mainColor + "00"); // 0% opacity
+
+          trafficChart = new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: ["월", "화", "수", "목", "금", "토", "일"],
+              datasets: [
+                {
+                  label: "방문자 수",
+                  data: [120, 190, 150, 250, 220, 300, 280],
+                  borderColor: mainColor,
+                  backgroundColor: gradient,
+                  borderWidth: 3,
+                  pointBackgroundColor: secBg,
+                  pointBorderColor: mainColor,
+                  pointBorderWidth: 2,
+                  pointRadius: 4,
+                  pointHoverRadius: 6,
+                  fill: true,
+                  tension: 0.4, // 부드러운 곡선 적용
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: thirdBg,
+                  titleColor: getCSSVar("--main-text", "#1a2b26"),
+                  bodyColor: getCSSVar("--main-text", "#1a2b26"),
+                  padding: 10,
+                  cornerRadius: 8,
+                  displayColors: false,
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  grid: {
+                    color: thirdBg,
+                    drawBorder: false,
+                    borderDash: [5, 5],
+                  },
+                  ticks: {
+                    color: subText,
+                    font: { family: "'Nanum Gothic', sans-serif", weight: 600 },
+                  },
+                },
+                x: {
+                  grid: { display: false, drawBorder: false },
+                  ticks: {
+                    color: subText,
+                    font: { family: "'Nanum Gothic', sans-serif", weight: 600 },
+                  },
+                },
+              },
+            },
+          });
+        };
+
+        initChart();
+
+        // 다크모드 토글 시 차트 색상 업데이트
+        const themeToggleBtn = document.querySelector(".theme-toggle");
+        if (themeToggleBtn) {
+          themeToggleBtn.addEventListener("click", () => {
+            setTimeout(() => {
+              const mainColor = getCSSVar("--main-color", "#00a376");
+              const subText = getCSSVar("--sub-text", "#5f7d75");
+              const thirdBg = getCSSVar("--third-background", "#e0eee9");
+              const secBg = getCSSVar("--secondary-background", "#ffffff");
+
+              let gradient = ctx.createLinearGradient(0, 0, 0, 250);
+              gradient.addColorStop(0, mainColor + "66");
+              gradient.addColorStop(1, mainColor + "00");
+
+              trafficChart.data.datasets[0].borderColor = mainColor;
+              trafficChart.data.datasets[0].backgroundColor = gradient;
+              trafficChart.data.datasets[0].pointBackgroundColor = secBg;
+              trafficChart.data.datasets[0].pointBorderColor = mainColor;
+
+              trafficChart.options.scales.y.grid.color = thirdBg;
+              trafficChart.options.scales.y.ticks.color = subText;
+              trafficChart.options.scales.x.ticks.color = subText;
+
+              trafficChart.update();
+            }, 100); // CSS 변수 트랜지션 시간 대기
+          });
+        }
+      });
+    </script>
   </body>
 </html>
